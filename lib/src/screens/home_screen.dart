@@ -1,21 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:trekworld/src/app.dart';
 
 class HomeScreen extends StatelessWidget {
   Widget build(context) {
-    return Container(
-      decoration: BoxDecoration(
-        image:
-            DecorationImage(image: AssetImage('assets/images/background.jpg')),
+    Size size = MediaQuery.of(context).size;
+    return Stack(
+      children: <Widget>[
+        Center(
+          child: Image.asset(
+            'assets/images/background.jpg',
+            width: size.width,
+            height: size.height,
+            fit: BoxFit.fill,
+          ),
+        ),
+        header(),
+        subHeader(),
+      ],
+    );
+  }
+
+  Widget header() {
+    return Padding(
+      padding: const EdgeInsets.all(50.0),
+      child: Text(
+        'Trek World',
+        style: TextStyle(
+          fontFamily: 'Trebuchet MS',
+          fontSize: 40.0,
+          color: Colors.white,
+        ),
       ),
     );
   }
 
-  // Widget appBar() {
-  //   return AppBar(
-  //     leading: Icon(Icons.home),
-  //     title: Text('Trek World'),
-  //     backgroundColor: PrimaryColor,
-  //   );
-  // }
+  Widget subHeader() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 150.0, top: 150.0),
+      child: Text(
+        'Your Next Hiking Trip Starts Here!',
+        style: TextStyle(
+          fontFamily: 'Trebuchet MS',
+          fontSize: 25.0,
+          color: Colors.white,
+          shadows: [
+            Shadow(
+                // bottomLeft
+                offset: Offset(-1.0, -1.0),
+                color: Colors.black),
+            Shadow(
+                // bottomRight
+                offset: Offset(1.0, -1.0),
+                color: Colors.black),
+            Shadow(
+                // topRight
+                offset: Offset(1.0, 1.0),
+                color: Colors.black),
+            Shadow(
+                // topLeft
+                offset: Offset(-1.0, 1.0),
+                color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
 }
