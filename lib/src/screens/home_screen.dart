@@ -2,25 +2,29 @@ import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   Widget build(context) {
-    Size size = MediaQuery.of(context).size;
     return Stack(
       children: <Widget>[
-        Center(
-          child: Image.asset(
-            'assets/images/background.jpg',
-            width: size.width,
-            height: size.height,
-            fit: BoxFit.fill,
-          ),
-        ),
+        background(context),
         header(),
         subHeader(),
-        login(),
+        login(context),
       ],
     );
   }
 
-  Widget login() {
+  Widget background(context) {
+    Size size = MediaQuery.of(context).size;
+    return Center(
+      child: Image.asset(
+        'assets/images/background.jpg',
+        width: size.width,
+        height: size.height,
+        fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget login(context) {
     return Padding(
       padding: const EdgeInsets.only(left: 305.0, top: 660.0),
       child: RawMaterialButton(
@@ -35,25 +39,15 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        fillColor: Colors.brown[700],
-        splashColor: Colors.blueAccent,
+        fillColor: Colors.deepOrangeAccent,
+        splashColor: Colors.orangeAccent,
         shape: const StadiumBorder(),
         onPressed: () {
-          print('tapped');
+          Navigator.pushReplacementNamed(context, '/login');
         },
       ),
     );
   }
-
-  // Widget login() {
-  //   return Padding(
-  //     padding: const EdgeInsets.only(left: 307.0, top: 650.0),
-  //     child: FloatingActionButton(
-  //       child: Text('Login'),
-  //       onPressed: () {},
-  //     ),
-  //   );
-  // }
 
   Widget header() {
     return Padding(
@@ -82,19 +76,19 @@ class HomeScreen extends StatelessWidget {
             Shadow(
                 // bottomLeft
                 offset: Offset(-1.0, -1.0),
-                color: Colors.black),
+                color: Colors.brown),
             Shadow(
                 // bottomRight
                 offset: Offset(1.0, -1.0),
-                color: Colors.black),
+                color: Colors.brown),
             Shadow(
                 // topRight
                 offset: Offset(1.0, 1.0),
-                color: Colors.black),
+                color: Colors.brown),
             Shadow(
                 // topLeft
                 offset: Offset(-1.0, 1.0),
-                color: Colors.black),
+                color: Colors.brown),
           ],
         ),
       ),
