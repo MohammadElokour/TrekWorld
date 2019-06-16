@@ -1,0 +1,8 @@
+
+<resources>
+    <string name="app_name">TrekWorld</string>
+
+    <string name="facebook_app_id">351605548887361</string>
+
+    <string name="fb_login_protocol_scheme">fb351605548887361</string>
+</resources>

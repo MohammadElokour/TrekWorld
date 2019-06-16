@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "843059286422",
+    "firebase_url": "https://trekworld-1587b.firebaseio.com",
+    "project_id": "trekworld-1587b",
+    "storage_bucket": "trekworld-1587b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843059286422:android:c628def1781b3e2c",
+        "android_client_info": {
+          "package_name": "com.example.trekworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843059286422-hk8im60ce2nj561p2birb71fls2934q3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trekworld",
+            "certificate_hash": "1713ada7fefc7a0d1581075ab921034c2e5cb062"
+          }
+        },
+        {
+          "client_id": "843059286422-r1bv9l00oqadrk1jkh6npkptud8jg52k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8W-CdU4xIFg2JMdb2rwb36F-fS5G9mfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843059286422-r1bv9l00oqadrk1jkh6npkptud8jg52k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
