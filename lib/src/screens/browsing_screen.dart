@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_screen.dart';
 
 class BrowsingScreen extends StatelessWidget {
   Widget build(context) {
@@ -36,9 +37,7 @@ class BrowsingScreen extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
+              onTap: () {},
             ),
           ],
         ),

@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatelessWidget {
-  Widget build(context) {
+class LoginScreen extends StatefulWidget {
+  LoginScreen({Key key}) : super(key: key);
+
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  FacebookLogin fbLogin = FacebookLogin();
+  GoogleSignIn googleAuth = GoogleSignIn();
+  bool isLogged = false;
+
+  void logOut() async {
+    await FirebaseAuth.instance.signOut().then((responce) {
+      isLogged = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
         background(context),
         homeBtn(context),
         header(),
         buttons(context),
-        signIn(context),
+        // signIn(context),
       ],
     );
   }
@@ -51,126 +71,129 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget buttons(context) {
-  return Column(
-    children: <Widget>[
-      //Facebook button:
-      Padding(
-        padding: const EdgeInsets.only(top: 270.0, left: 63.0),
-        child: RawMaterialButton(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 100.0),
-            child: Text(
-              'Facebook',
-              style: TextStyle(
-                fontFamily: 'Trebuchet MS',
-                fontSize: 20.0,
-                color: Colors.white,
+  Widget buttons(context) {
+    return Column(
+      children: <Widget>[
+        //Google button:
+        Padding(
+          padding: const EdgeInsets.only(top: 270.0, left: 63.0),
+          child: RawMaterialButton(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 115.0),
+              child: Text(
+                'Google',
+                style: TextStyle(
+                  fontFamily: 'Trebuchet MS',
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
               ),
             ),
+            fillColor: Color(0xFFDD4B39),
+            splashColor: Colors.redAccent,
+            shape: const StadiumBorder(),
+            onPressed: () {
+              googleAuth.signIn().then((result) {
+                result.authentication.then((googleKey) {
+                  AuthCredential credential = GoogleAuthProvider.getCredential(
+                      idToken: googleKey.idToken,
+                      accessToken: googleKey.accessToken);
+                  FirebaseAuth.instance
+                      .signInWithCredential(credential)
+                      .then((signedInUser) {
+                    isLogged = true;
+                    print('Signed in as ${signedInUser.displayName}');
+                    Navigator.pushReplacementNamed(context, '/browser');
+                  }).catchError((e) {
+                    print(e);
+                  });
+                }).catchError((e) {
+                  print(e);
+                });
+              }).catchError((e) {
+                print(e);
+              });
+            },
           ),
-          fillColor: Color(0xFF3B5998),
-          splashColor: Colors.blueAccent,
-          shape: const StadiumBorder(),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/browser');
-          },
         ),
-      ),
-      //-------------------------------------------------------------------------------
-      //Twitter button:
-      Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 63.0),
-        child: RawMaterialButton(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 110.0),
-            child: Text(
-              'Twitter',
-              style: TextStyle(
-                fontFamily: 'Trebuchet MS',
-                fontSize: 20.0,
-                color: Colors.white,
+        //--------------------------------------------------------------------------------------
+        //Facebook button:
+        Padding(
+          padding: const EdgeInsets.only(top: 30.0, left: 63.0),
+          child: RawMaterialButton(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 100.0),
+              child: Text(
+                'Facebook',
+                style: TextStyle(
+                  fontFamily: 'Trebuchet MS',
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
               ),
             ),
+            fillColor: Color(0xFF3B5998),
+            splashColor: Colors.blueAccent,
+            shape: const StadiumBorder(),
+            onPressed: () {
+              fbLogin.logInWithReadPermissions(
+                  ['email', 'public_profile']).then((result) {
+                switch (result.status) {
+                  case FacebookLoginStatus.loggedIn:
+                    AuthCredential credential =
+                        FacebookAuthProvider.getCredential(
+                            accessToken: result.accessToken.token);
+                    FirebaseAuth.instance
+                        .signInWithCredential(credential)
+                        .then((signedInUser) {
+                      print('Signed in as ${signedInUser.displayName}');
+                      Navigator.pushReplacementNamed(context, '/browser');
+                    }).catchError((e) {
+                      print(e);
+                    });
+                    break;
+                  case FacebookLoginStatus.cancelledByUser:
+                    print('Facebook login cancelled by user');
+                    break;
+                  case FacebookLoginStatus.error:
+                    print('Facebook login error');
+                    break;
+                }
+              }).catchError((e) {
+                print(e);
+              });
+            },
           ),
-          fillColor: Color(0xFF1DA1F2),
-          splashColor: Colors.lightBlue[100],
-          shape: const StadiumBorder(),
-          onPressed: () {
-            print('Twitter Clicked!');
-          },
         ),
-      ),
-      //--------------------------------------------------------------------------
-      //Google button:
-      Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 63.0),
-        child: RawMaterialButton(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 115.0),
-            child: Text(
-              'Google',
-              style: TextStyle(
-                fontFamily: 'Trebuchet MS',
-                fontSize: 20.0,
-                color: Colors.white,
+        //-------------------------------------------------------------------------
+        // Twitter button:
+        Padding(
+          padding: const EdgeInsets.only(top: 30.0, left: 63.0),
+          child: RawMaterialButton(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 110.0),
+              child: Text(
+                'Twitter',
+                style: TextStyle(
+                  fontFamily: 'Trebuchet MS',
+                  fontSize: 20.0,
+                  color: Colors.white,
+                ),
               ),
             ),
-          ),
-          fillColor: Color(0xFFDD4B39),
-          splashColor: Colors.redAccent,
-          shape: const StadiumBorder(),
-          onPressed: () {
-            print('Google Clicked!');
-          },
-        ),
-      ),
-    ],
-  );
-}
-
-Widget signIn(context) {
-  return Column(
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(top: 540.0, left: 100.0),
-        child: Text(
-          'Don\'t have an account?',
-          style: TextStyle(
-            fontFamily: 'Trebuchet MS',
-            fontSize: 20.0,
-            color: Colors.white,
+            fillColor: Color(0xFF1DA1F2),
+            splashColor: Colors.lightBlue[100],
+            shape: const StadiumBorder(),
+            onPressed: () {
+              print('Twitter Clicked!');
+            },
           ),
         ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 90.0),
-        child: RawMaterialButton(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 15.0, horizontal: 40.0),
-            child: Text(
-              'Sign Up!',
-              style: TextStyle(
-                fontFamily: 'Trebuchet MS',
-                fontSize: 20.0,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          fillColor: Colors.white,
-          splashColor: Colors.purple,
-          shape: const StadiumBorder(),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, '/signup');
-          },
-        ),
-      ),
-    ],
-  );
+      ],
+    );
+  }
 }

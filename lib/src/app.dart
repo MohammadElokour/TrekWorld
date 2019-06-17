@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
-import 'screens/signup_screen.dart';
 import 'screens/browsing_screen.dart';
+// import 'screens/signup_screen.dart';
 
 const PrimaryColor = const Color(0xFFDC143C);
 // const TextColor = const Color(0xFFFFFFFF);
@@ -38,14 +38,6 @@ class App extends StatelessWidget {
           );
         },
       );
-    } else if (settings.name == '/signup') {
-      return MaterialPageRoute(
-        builder: (context) {
-          return Scaffold(
-            body: SignupScreen(),
-          );
-        },
-      );
     } else if (settings.name == '/browser') {
       return MaterialPageRoute(
         builder: (context) {
@@ -53,5 +45,14 @@ class App extends StatelessWidget {
         },
       );
     }
+    // else if (settings.name == '/signup') {
+    //   return MaterialPageRoute(
+    //     builder: (context) {
+    //       return Scaffold(
+    //         body: SignupScreen(),
+    //       );
+    //     },
+    //   );
+    // }
   }
 }
