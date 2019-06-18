@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:trekworld/src/screens/browsing_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -105,7 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       .then((signedInUser) {
                     isLogged = true;
                     print('Signed in as ${signedInUser.displayName}');
-                    Navigator.pushReplacementNamed(context, '/browser');
+                    var route = MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          BrowsingScreen(value: signedInUser),
+                    );
+                    Navigator.of(context).pushReplacement(route);
                   }).catchError((e) {
                     print(e);
                   });
