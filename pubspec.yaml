@@ -61,6 +61,10 @@ flutter:
     - family: Trebuchet MS
       fonts:
         - asset: assets/fonts/trebucbd.ttf
+
+    - family: GT Walsheim Regular
+      fonts:
+        - asset: assets/fonts/GTWalsheimRegular.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

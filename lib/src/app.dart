@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:trekworld/src/screens/Info_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/browsing_screen.dart';
+import 'screens/Info_screen.dart';
 // import 'screens/signup_screen.dart';
 
 const PrimaryColor = const Color(0xFFDC143C);
@@ -42,6 +44,12 @@ class App extends StatelessWidget {
       return MaterialPageRoute(
         builder: (context) {
           return BrowsingScreen();
+        },
+      );
+    } else if (settings.name == '/info') {
+      return MaterialPageRoute(
+        builder: (context) {
+          return InfoScreen();
         },
       );
     }
