@@ -21,6 +21,14 @@ class InfoScreen extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    blurRadius: 7.0,
+                  )
+                ],
+            ), 
             padding: EdgeInsets.all(15.0),
             width: 450.0,
             height: 300.0,
@@ -35,6 +43,15 @@ class InfoScreen extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.only(top: 10.0),
+            child: Row(
+              children: <Widget>[
+                IconButton(
+                  icon: ,
+                  onPressed: ,
+                )
+                IconButton()
+              ],
+            ),
           ),
           Align(
             alignment: Alignment.center,
