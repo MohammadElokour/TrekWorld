@@ -23,13 +23,13 @@ class InfoScreen extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    blurRadius: 7.0,
-                  )
-                ],
-            ), 
-            padding: EdgeInsets.all(15.0),
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 20.0,
+                )
+              ],
+            ),
+            padding: EdgeInsets.all(20.0),
             width: 450.0,
             height: 300.0,
             child: ListView(
@@ -45,11 +45,42 @@ class InfoScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 10.0),
             child: Row(
               children: <Widget>[
+                Container(padding: EdgeInsets.only(right: 130.0)),
+                Container(
+                  child: Text(value['upVote'].toString()),
+                ),
                 IconButton(
-                  icon: ,
-                  onPressed: ,
-                )
-                IconButton()
+                  icon: Icon(Icons.thumb_up),
+                  iconSize: 30.0,
+                  splashColor: Colors.green,
+                  onPressed: () {
+                    Firestore.instance.runTransaction((transaction) async {
+                      DocumentSnapshot freshSnap =
+                          await transaction.get(value.reference);
+                      await transaction.update(freshSnap.reference, {
+                        'upVote': freshSnap['upVote'] + 1,
+                      });
+                    });
+                  },
+                ),
+                Container(padding: EdgeInsets.only(right: 40.0)),
+                Container(
+                  child: Text(value['downVote'].toString()),
+                ),
+                IconButton(
+                  icon: Icon(Icons.thumb_down),
+                  iconSize: 30.0,
+                  splashColor: Colors.red,
+                  onPressed: () {
+                    Firestore.instance.runTransaction((transaction) async {
+                      DocumentSnapshot freshSnap =
+                          await transaction.get(value.reference);
+                      await transaction.update(freshSnap.reference, {
+                        'downVote': freshSnap['downVote'] + 1,
+                      });
+                    });
+                  },
+                ),
               ],
             ),
           ),
@@ -61,6 +92,12 @@ class InfoScreen extends StatelessWidget {
                 width: 375.0,
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      blurRadius: 20.0,
+                    )
+                  ],
                   color: Color(0xFFDC143C),
                   borderRadius: BorderRadius.all(Radius.circular(7.0)),
                 ),
