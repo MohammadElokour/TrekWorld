@@ -45,7 +45,50 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
               ),
             ),
             padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 115.0),
-          )
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 290.0),
+            child: Row(
+              children: <Widget>[
+                Container(padding: EdgeInsets.only(right: 110.0)),
+                Container(
+                  child: Text(document['upVote'].toString()),
+                ),
+                IconButton(
+                  icon: Icon(Icons.thumb_up),
+                  iconSize: 30.0,
+                  splashColor: Colors.green,
+                  onPressed: () {
+                    Firestore.instance.runTransaction((transaction) async {
+                      DocumentSnapshot freshSnap =
+                          await transaction.get(document.reference);
+                      await transaction.update(freshSnap.reference, {
+                        'upVote': freshSnap['upVote'] + 1,
+                      });
+                    });
+                  },
+                ),
+                Container(padding: EdgeInsets.only(right: 40.0)),
+                Container(
+                  child: Text(document['downVote'].toString()),
+                ),
+                IconButton(
+                  icon: Icon(Icons.thumb_down),
+                  iconSize: 30.0,
+                  splashColor: Colors.red,
+                  onPressed: () {
+                    Firestore.instance.runTransaction((transaction) async {
+                      DocumentSnapshot freshSnap =
+                          await transaction.get(document.reference);
+                      await transaction.update(freshSnap.reference, {
+                        'downVote': freshSnap['downVote'] + 1,
+                      });
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
         ],
       ),
       onTap: () {
@@ -105,7 +148,7 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
       body: StreamBuilder(
         stream: Firestore.instance.collection('Places').snapshots(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return const Text('Loading...');
+          if (!snapshot.hasData) return CircularProgressIndicator();
           return ListView.builder(
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index) =>

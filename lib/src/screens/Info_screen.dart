@@ -21,6 +21,9 @@ class InfoScreen extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
+            padding: EdgeInsets.all(20.0),
+            width: 450.0,
+            height: 300.0,
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -29,20 +32,43 @@ class InfoScreen extends StatelessWidget {
                 )
               ],
             ),
-            padding: EdgeInsets.all(20.0),
-            width: 450.0,
-            height: 300.0,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                Image.network('${value['firstImage']}'),
-                Image.network('${value['secondImage']}'),
-                Image.network('${value['thirdImage']}'),
+                Container(
+                  width: 460.0,
+                  child: Card(
+                    child: Wrap(
+                      children: <Widget>[
+                        Image.network('${value['firstImage']}'),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 460.0,
+                  child: Card(
+                    child: Wrap(
+                      children: <Widget>[
+                        Image.network('${value['secondImage']}'),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 460.0,
+                  child: Card(
+                    child: Wrap(
+                      children: <Widget>[
+                        Image.network('${value['thirdImage']}'),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(top: 10.0),
             child: Row(
               children: <Widget>[
                 Container(padding: EdgeInsets.only(right: 130.0)),
@@ -80,7 +106,7 @@ class InfoScreen extends StatelessWidget {
                       });
                     });
                   },
-                ),
+                )
               ],
             ),
           ),
@@ -89,7 +115,7 @@ class InfoScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
               child: Container(
-                width: 375.0,
+                width: 360.0,
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   boxShadow: [

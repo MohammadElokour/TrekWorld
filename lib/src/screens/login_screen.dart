@@ -23,14 +23,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        background(context),
-        homeBtn(context),
-        header(),
-        buttons(context),
-        // signIn(context),
-      ],
+    return SafeArea(
+      child: Stack(
+        children: <Widget>[
+          background(context),
+          homeBtn(context),
+          header(),
+          buttons(context),
+          // signIn(context),
+        ],
+      ),
     );
   }
 
