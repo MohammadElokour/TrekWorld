@@ -44,69 +44,77 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
             contentTextStyle: TextStyle(fontFamily: 'GT Walsheim Regular'),
             content: Column(
               children: <Widget>[
-                Container(
-                  margin: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter place name',
-                      icon: Icon(Icons.place),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 10),
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter place name',
+                              icon: Icon(Icons.place),
+                            ),
+                            onChanged: (value) {
+                              this.name = value;
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 10),
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter 1st Image URL',
+                              icon: Icon(Icons.add_to_photos),
+                            ),
+                            onChanged: (value) {
+                              this.firstImage = value;
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 10),
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter 2nd Image URL',
+                              icon: Icon(Icons.add_to_photos),
+                            ),
+                            onChanged: (value) {
+                              this.secondImage = value;
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 10),
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter 3rd Image URL',
+                              icon: Icon(Icons.add_to_photos),
+                            ),
+                            onChanged: (value) {
+                              this.thridImage = value;
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(right: 10, left: 10),
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Enter a paragraph about the place',
+                              icon: Icon(Icons.info),
+                            ),
+                            onChanged: (value) {
+                              this.info = value;
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    onChanged: (value) {
-                      this.name = value;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter 1st Image URL',
-                      icon: Icon(Icons.add_to_photos),
-                    ),
-                    onChanged: (value) {
-                      this.firstImage = value;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter 2nd Image URL',
-                      icon: Icon(Icons.add_to_photos),
-                    ),
-                    onChanged: (value) {
-                      this.secondImage = value;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter 3rd Image URL',
-                      icon: Icon(Icons.add_to_photos),
-                    ),
-                    onChanged: (value) {
-                      this.thridImage = value;
-                    },
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(right: 10, left: 10),
-                  padding: EdgeInsets.symmetric(vertical: 20.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Enter Info Paragraph of the Place',
-                      icon: Icon(Icons.dehaze),
-                    ),
-                    onChanged: (value) {
-                      this.info = value;
-                    },
                   ),
                 ),
               ],
@@ -154,7 +162,7 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
             'Place Added!',
             style: TextStyle(
               fontFamily: 'Trebuchet MS',
-              fontSize: 18.0,
+              fontSize: 20.0,
             ),
           ),
           content: Text(
@@ -326,12 +334,18 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFFDC143C),
-        child: Icon(Icons.add_photo_alternate),
-        onPressed: () {
-          addDialog(context);
-        },
+      floatingActionButton: Container(
+        height: 65.5,
+        width: 65.5,
+        child: FittedBox(
+          child: FloatingActionButton(
+            backgroundColor: Color(0xFFDC143C),
+            child: Icon(Icons.add_photo_alternate),
+            onPressed: () {
+              addDialog(context);
+            },
+          ),
+        ),
       ),
     );
   }
