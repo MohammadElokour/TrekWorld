@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget login(context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 305.0, top: 660.0),
+      padding: const EdgeInsets.only(left: 300.0, top: 645.0),
       child: RawMaterialButton(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 21.0),

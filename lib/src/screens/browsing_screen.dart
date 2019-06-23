@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 import 'package:trekworld/src/screens/Info_screen.dart';
+import '../../services/crud.dart';
 
 class BrowsingScreen extends StatefulWidget {
   final FirebaseUser value;
@@ -12,6 +14,174 @@ class BrowsingScreen extends StatefulWidget {
 }
 
 class _BrowsingScreenState extends State<BrowsingScreen> {
+  String name;
+  String firstImage;
+  String secondImage;
+  String thridImage;
+  String info;
+
+  CrudMethods crudObj = CrudMethods();
+
+  Future<bool> addDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'New Place',
+              style: TextStyle(
+                fontFamily: 'Trebuchet MS',
+                fontSize: 18.0,
+              ),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ),
+            contentPadding: EdgeInsets.all(10.0),
+            contentTextStyle: TextStyle(fontFamily: 'GT Walsheim Regular'),
+            content: Column(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter place name',
+                      icon: Icon(Icons.place),
+                    ),
+                    onChanged: (value) {
+                      this.name = value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter 1st Image URL',
+                      icon: Icon(Icons.add_to_photos),
+                    ),
+                    onChanged: (value) {
+                      this.firstImage = value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter 2nd Image URL',
+                      icon: Icon(Icons.add_to_photos),
+                    ),
+                    onChanged: (value) {
+                      this.secondImage = value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter 3rd Image URL',
+                      icon: Icon(Icons.add_to_photos),
+                    ),
+                    onChanged: (value) {
+                      this.thridImage = value;
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 10, left: 10),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter Info Paragraph of the Place',
+                      icon: Icon(Icons.dehaze),
+                    ),
+                    onChanged: (value) {
+                      this.info = value;
+                    },
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  'Add',
+                  style: TextStyle(
+                    fontFamily: 'GT Walsheim Regular',
+                  ),
+                ),
+                textColor: Colors.blue,
+                splashColor: Colors.blueAccent,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Map placeData = {
+                    'name': this.name,
+                    'firstImage': this.firstImage,
+                    'secondImage': this.secondImage,
+                    'thirdImage': this.thridImage,
+                    'info': this.info,
+                    'upVote': 0,
+                    'downVote': 0
+                  };
+                  crudObj.addData(placeData).then((result) {
+                    dialogTrigger(context);
+                  }).catchError((e) {
+                    print(e);
+                  });
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  Future<bool> dialogTrigger(BuildContext context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Place Added!',
+            style: TextStyle(
+              fontFamily: 'Trebuchet MS',
+              fontSize: 18.0,
+            ),
+          ),
+          content: Text(
+            'Your Place Has been added Successfully',
+            style: TextStyle(
+              fontFamily: 'GT Walsheim Regular',
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                'Alright',
+                style: TextStyle(
+                  fontFamily: 'GT Walsheim Regular',
+                ),
+              ),
+              textColor: Colors.blue,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     return ListTile(
       title: Stack(
@@ -154,6 +324,13 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
             itemBuilder: (context, index) =>
                 _buildListItem(context, snapshot.data.documents[index]),
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFFDC143C),
+        child: Icon(Icons.add_photo_alternate),
+        onPressed: () {
+          addDialog(context);
         },
       ),
     );
