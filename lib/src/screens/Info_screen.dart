@@ -23,7 +23,7 @@ class InfoScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(20.0),
             width: 450.0,
-            height: 300.0,
+            height: 319.0,
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -38,6 +38,7 @@ class InfoScreen extends StatelessWidget {
                 Container(
                   width: 460.0,
                   child: Card(
+                    color: Color(0xFFDC143C),
                     child: Wrap(
                       children: <Widget>[
                         Image.network('${value['firstImage']}'),
@@ -48,6 +49,7 @@ class InfoScreen extends StatelessWidget {
                 Container(
                   width: 460.0,
                   child: Card(
+                    color: Color(0xFFDC143C),
                     child: Wrap(
                       children: <Widget>[
                         Image.network('${value['secondImage']}'),
@@ -58,6 +60,7 @@ class InfoScreen extends StatelessWidget {
                 Container(
                   width: 460.0,
                   child: Card(
+                    color: Color(0xFFDC143C),
                     child: Wrap(
                       children: <Widget>[
                         Image.network('${value['thirdImage']}'),
@@ -79,15 +82,7 @@ class InfoScreen extends StatelessWidget {
                   icon: Icon(Icons.thumb_up),
                   iconSize: 30.0,
                   splashColor: Colors.green,
-                  onPressed: () {
-                    Firestore.instance.runTransaction((transaction) async {
-                      DocumentSnapshot freshSnap =
-                          await transaction.get(value.reference);
-                      await transaction.update(freshSnap.reference, {
-                        'upVote': freshSnap['upVote'] + 1,
-                      });
-                    });
-                  },
+                  onPressed: () {},
                 ),
                 Container(padding: EdgeInsets.only(right: 40.0)),
                 Container(
@@ -97,15 +92,7 @@ class InfoScreen extends StatelessWidget {
                   icon: Icon(Icons.thumb_down),
                   iconSize: 30.0,
                   splashColor: Colors.red,
-                  onPressed: () {
-                    Firestore.instance.runTransaction((transaction) async {
-                      DocumentSnapshot freshSnap =
-                          await transaction.get(value.reference);
-                      await transaction.update(freshSnap.reference, {
-                        'downVote': freshSnap['downVote'] + 1,
-                      });
-                    });
-                  },
+                  onPressed: () {},
                 )
               ],
             ),

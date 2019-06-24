@@ -22,6 +22,13 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
 
   CrudMethods crudObj = CrudMethods();
 
+  void logOut() async {
+    await FirebaseAuth.instance.signOut().then((_) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil("/", ModalRoute.withName("/browser"));
+    });
+  }
+
   Future<bool> addDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -124,27 +131,37 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
                 child: Text(
                   'Add',
                   style: TextStyle(
+                    fontSize: 17.0,
                     fontFamily: 'GT Walsheim Regular',
                   ),
                 ),
-                textColor: Colors.blue,
-                splashColor: Colors.blueAccent,
+                textColor: Color(0xFFDC143C),
+                splashColor: Colors.grey,
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Map placeData = {
-                    'name': this.name,
-                    'firstImage': this.firstImage,
-                    'secondImage': this.secondImage,
-                    'thirdImage': this.thridImage,
-                    'info': this.info,
-                    'upVote': 0,
-                    'downVote': 0
-                  };
-                  crudObj.addData(placeData).then((result) {
-                    dialogTrigger(context);
-                  }).catchError((e) {
-                    print(e);
-                  });
+                  if (this.name == null ||
+                      this.firstImage == null ||
+                      this.secondImage == null ||
+                      this.info == null) {
+                    return null;
+                  } else {
+                    Navigator.of(context).pop();
+                    Map<String, dynamic> placeData = {
+                      'name': this.name,
+                      'firstImage': this.firstImage,
+                      'secondImage': this.secondImage,
+                      'thirdImage': this.thridImage,
+                      'info': this.info,
+                      'upVote': 0,
+                      'downVote': 0,
+                      'likedUsers': [],
+                      'dislikeUsers': []
+                    };
+                    crudObj.addData(placeData).then((result) {
+                      dialogTrigger(context);
+                    }).catchError((e) {
+                      print(e);
+                    });
+                  }
                 },
               )
             ],
@@ -237,13 +254,34 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
                   iconSize: 30.0,
                   splashColor: Colors.green,
                   onPressed: () {
-                    Firestore.instance.runTransaction((transaction) async {
-                      DocumentSnapshot freshSnap =
-                          await transaction.get(document.reference);
-                      await transaction.update(freshSnap.reference, {
-                        'upVote': freshSnap['upVote'] + 1,
+                    List currentUser = [
+                      {'userEmail': '${widget.value.email}', 'isLiked': false}
+                    ];
+                    for (var i = 0; i < document['likedUsers'].length; i++) {
+                      if (document['likedUsers'][i]['userEmail'] ==
+                          currentUser[0]['userEmail']) {
+                        currentUser[0]['isLiked'] = false;
+                        Firestore.instance.runTransaction((transaction) async {
+                          DocumentSnapshot freshSnap =
+                              await transaction.get(document.reference);
+                          await transaction.update(freshSnap.reference, {
+                            'upVote': freshSnap['upVote'] - 1,
+                            'likedUsers': FieldValue.arrayRemove(currentUser)
+                          });
+                        });
+                      }
+                    }
+                    if (!currentUser[0]['isLiked']) {
+                      currentUser[0]['isLiked'] = true;
+                      Firestore.instance.runTransaction((transaction) async {
+                        DocumentSnapshot freshSnap =
+                            await transaction.get(document.reference);
+                        await transaction.update(freshSnap.reference, {
+                          'upVote': freshSnap['upVote'] + 1,
+                          'likedUsers': FieldValue.arrayUnion(currentUser)
+                        });
                       });
-                    });
+                    }
                   },
                 ),
                 Container(padding: EdgeInsets.only(right: 40.0)),
@@ -254,14 +292,38 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
                   icon: Icon(Icons.thumb_down),
                   iconSize: 30.0,
                   splashColor: Colors.red,
-                  onPressed: () {
-                    Firestore.instance.runTransaction((transaction) async {
-                      DocumentSnapshot freshSnap =
-                          await transaction.get(document.reference);
-                      await transaction.update(freshSnap.reference, {
-                        'downVote': freshSnap['downVote'] + 1,
+                  onPressed: () async {
+                    List currentUser = [
+                      {
+                        'userEmail': '${widget.value.email}',
+                        'isDisliked': false
+                      }
+                    ];
+                    for (var i = 0; i < document['dislikeUsers'].length; i++) {
+                      if (document['dislikeUsers'][i]['userEmail'] ==
+                          currentUser[0]['userEmail']) {
+                        currentUser[0]['isDisliked'] = false;
+                        Firestore.instance.runTransaction((transaction) async {
+                          DocumentSnapshot freshSnap =
+                              await transaction.get(document.reference);
+                          await transaction.update(freshSnap.reference, {
+                            'downVote': freshSnap['downVote'] - 1,
+                            'dislikeUsers': FieldValue.arrayRemove(currentUser)
+                          });
+                        });
+                      }
+                    }
+                    if (!currentUser[0]['isDisliked']) {
+                      currentUser[0]['isDisliked'] = true;
+                      Firestore.instance.runTransaction((transaction) async {
+                        DocumentSnapshot freshSnap =
+                            await transaction.get(document.reference);
+                        await transaction.update(freshSnap.reference, {
+                          'downVote': freshSnap['downVote'] + 1,
+                          'dislikeUsers': FieldValue.arrayUnion(currentUser)
+                        });
                       });
-                    });
+                    }
                   },
                 )
               ],
@@ -316,9 +378,7 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
                   color: Colors.black,
                 ),
               ),
-              onTap: () {
-                Navigator.pushReplacementNamed(context, '/');
-              },
+              onTap: logOut,
             ),
           ],
         ),
@@ -340,7 +400,10 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
         child: FittedBox(
           child: FloatingActionButton(
             backgroundColor: Color(0xFFDC143C),
-            child: Icon(Icons.add_photo_alternate),
+            child: Icon(
+              Icons.add,
+              size: 35.0,
+            ),
             onPressed: () {
               addDialog(context);
             },

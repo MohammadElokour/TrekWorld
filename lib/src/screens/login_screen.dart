@@ -15,12 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   GoogleSignIn googleAuth = GoogleSignIn();
   bool isLogged = false;
 
-  void logOut() async {
-    await FirebaseAuth.instance.signOut().then((responce) {
-      isLogged = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -4,6 +4,7 @@ import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/browsing_screen.dart';
 import 'screens/Info_screen.dart';
+import 'screens/about_screen.dart';
 // import 'screens/signup_screen.dart';
 
 const PrimaryColor = const Color(0xFFDC143C);
@@ -53,15 +54,14 @@ class App extends StatelessWidget {
           return InfoScreen();
         },
       );
+    } else if (settings.name == '/about') {
+      return MaterialPageRoute(
+        builder: (context) {
+          return Scaffold(
+            body: AboutScreen(),
+          );
+        },
+      );
     }
-    // else if (settings.name == '/signup') {
-    //   return MaterialPageRoute(
-    //     builder: (context) {
-    //       return Scaffold(
-    //         body: SignupScreen(),
-    //       );
-    //     },
-    //   );
-    // }
   }
 }
