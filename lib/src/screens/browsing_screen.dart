@@ -210,122 +210,169 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     return ListTile(
       title: Stack(
+        alignment: Alignment.center,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(top: 20.0),
             width: 400.0,
             height: 275.0,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                color: Color(0xFFDC143C),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black,
-                    blurRadius: 7.0,
-                  )
-                ]),
-            child: Image.network(
-              document['firstImage'],
-              width: 350.0,
-              height: 245.0,
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              color: Color(0xFFDC143C),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 7.0,
+                )
+              ],
             ),
-          ),
-          Padding(
-            child: Text(
-              document['name'],
-              style: TextStyle(
-                fontFamily: 'Trebuchet MS',
-                fontSize: 21.0,
-                color: Colors.white,
-              ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Image.network(
+                  document['firstImage'],
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 210.0),
+                  child: Text(
+                    document['name'],
+                    style: TextStyle(
+                      fontFamily: 'Trebuchet MS',
+                      fontSize: 21.0,
+                      color: Colors.white,
+                      shadows: [
+                        Shadow(
+                            // bottomLeft
+                            offset: Offset(-1.0, -1.0),
+                            color: Colors.black),
+                        Shadow(
+                            // bottomRight
+                            offset: Offset(1.0, -1.0),
+                            color: Colors.black),
+                        Shadow(
+                            // topRight
+                            offset: Offset(1.0, 1.0),
+                            color: Colors.black),
+                        Shadow(
+                            // topLeft
+                            offset: Offset(-1.0, 1.0),
+                            color: Colors.black),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-            padding: EdgeInsets.symmetric(vertical: 35.0, horizontal: 115.0),
           ),
           Container(
-            padding: EdgeInsets.only(top: 290.0),
+            padding: EdgeInsets.only(top: 320.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Container(padding: EdgeInsets.only(right: 110.0)),
                 Container(
-                  child: Text(document['upVote'].toString()),
+                  child: Row(
+                    children: <Widget>[
+                      Text(document['upVote'].toString()),
+                      IconButton(
+                        icon: Icon(Icons.thumb_up),
+                        iconSize: 30.0,
+                        splashColor: Colors.grey,
+                        onPressed: () {
+                          bool isLiked = false;
+                          List currentUser = ['${widget.value.email}'];
+                          for (var i = 0;
+                              i < document['likedUsers'].length;
+                              i++) {
+                            if (document['likedUsers'][i] ==
+                                '${widget.value.email}') {
+                              isLiked = true;
+                            }
+                          }
+                          for (var i = 0;
+                              i < document['likedUsers'].length;
+                              i++) {
+                            if (isLiked) {
+                              Firestore.instance
+                                  .runTransaction((transaction) async {
+                                DocumentSnapshot freshSnap =
+                                    await transaction.get(document.reference);
+                                await transaction.update(freshSnap.reference, {
+                                  'likedUsers':
+                                      FieldValue.arrayRemove(currentUser),
+                                  'upVote': freshSnap['upVote'] - 1
+                                });
+                              });
+                            }
+                          }
+                          if (!isLiked) {
+                            Firestore.instance
+                                .runTransaction((transaction) async {
+                              DocumentSnapshot freshSnap =
+                                  await transaction.get(document.reference);
+                              await transaction.update(freshSnap.reference, {
+                                'likedUsers':
+                                    FieldValue.arrayUnion(currentUser),
+                                'upVote': freshSnap['upVote'] + 1
+                              });
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.thumb_up),
-                  iconSize: 30.0,
-                  splashColor: Colors.green,
-                  onPressed: () {
-                    List currentUser = [
-                      {'userEmail': '${widget.value.email}', 'isLiked': false}
-                    ];
-                    for (var i = 0; i < document['likedUsers'].length; i++) {
-                      if (document['likedUsers'][i]['userEmail'] ==
-                          currentUser[0]['userEmail']) {
-                        currentUser[0]['isLiked'] = false;
-                        Firestore.instance.runTransaction((transaction) async {
-                          DocumentSnapshot freshSnap =
-                              await transaction.get(document.reference);
-                          await transaction.update(freshSnap.reference, {
-                            'upVote': freshSnap['upVote'] - 1,
-                            'likedUsers': FieldValue.arrayRemove(currentUser)
-                          });
-                        });
-                      }
-                    }
-                    if (!currentUser[0]['isLiked']) {
-                      currentUser[0]['isLiked'] = true;
-                      Firestore.instance.runTransaction((transaction) async {
-                        DocumentSnapshot freshSnap =
-                            await transaction.get(document.reference);
-                        await transaction.update(freshSnap.reference, {
-                          'upVote': freshSnap['upVote'] + 1,
-                          'likedUsers': FieldValue.arrayUnion(currentUser)
-                        });
-                      });
-                    }
-                  },
-                ),
-                Container(padding: EdgeInsets.only(right: 40.0)),
                 Container(
-                  child: Text(document['downVote'].toString()),
+                  child: Row(
+                    children: <Widget>[
+                      Text(document['downVote'].toString()),
+                      IconButton(
+                        icon: Icon(Icons.thumb_down),
+                        iconSize: 30.0,
+                        splashColor: Colors.grey,
+                        onPressed: () {
+                          bool isDisliked = false;
+                          List currentUser = ['${widget.value.email}'];
+
+                          for (var i = 0;
+                              i < document['dislikeUsers'].length;
+                              i++) {
+                            if (document['dislikeUsers'][i] ==
+                                '${widget.value.email}') {
+                              isDisliked = true;
+                            }
+                          }
+                          for (var i = 0;
+                              i < document['dislikeUsers'].length;
+                              i++) {
+                            if (isDisliked) {
+                              Firestore.instance
+                                  .runTransaction((transaction) async {
+                                DocumentSnapshot freshSnap =
+                                    await transaction.get(document.reference);
+                                await transaction.update(freshSnap.reference, {
+                                  'dislikeUsers':
+                                      FieldValue.arrayRemove(currentUser),
+                                  'downVote': freshSnap['downVote'] - 1
+                                });
+                              });
+                            }
+                          }
+                          if (!isDisliked) {
+                            Firestore.instance
+                                .runTransaction((transaction) async {
+                              DocumentSnapshot freshSnap =
+                                  await transaction.get(document.reference);
+                              await transaction.update(freshSnap.reference, {
+                                'dislikeUsers':
+                                    FieldValue.arrayUnion(currentUser),
+                                'downVote': freshSnap['downVote'] + 1
+                              });
+                            });
+                          }
+                        },
+                      )
+                    ],
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.thumb_down),
-                  iconSize: 30.0,
-                  splashColor: Colors.red,
-                  onPressed: () async {
-                    List currentUser = [
-                      {
-                        'userEmail': '${widget.value.email}',
-                        'isDisliked': false
-                      }
-                    ];
-                    for (var i = 0; i < document['dislikeUsers'].length; i++) {
-                      if (document['dislikeUsers'][i]['userEmail'] ==
-                          currentUser[0]['userEmail']) {
-                        currentUser[0]['isDisliked'] = false;
-                        Firestore.instance.runTransaction((transaction) async {
-                          DocumentSnapshot freshSnap =
-                              await transaction.get(document.reference);
-                          await transaction.update(freshSnap.reference, {
-                            'downVote': freshSnap['downVote'] - 1,
-                            'dislikeUsers': FieldValue.arrayRemove(currentUser)
-                          });
-                        });
-                      }
-                    }
-                    if (!currentUser[0]['isDisliked']) {
-                      currentUser[0]['isDisliked'] = true;
-                      Firestore.instance.runTransaction((transaction) async {
-                        DocumentSnapshot freshSnap =
-                            await transaction.get(document.reference);
-                        await transaction.update(freshSnap.reference, {
-                          'downVote': freshSnap['downVote'] + 1,
-                          'dislikeUsers': FieldValue.arrayUnion(currentUser)
-                        });
-                      });
-                    }
-                  },
-                )
               ],
             ),
           ),
@@ -335,6 +382,7 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
         var route = MaterialPageRoute(
           builder: (BuildContext context) => InfoScreen(
                 value: document,
+                user: widget.value,
               ),
         );
         Navigator.of(context).push(route);

@@ -15,6 +15,12 @@ class _LoginScreenState extends State<LoginScreen> {
   GoogleSignIn googleAuth = GoogleSignIn();
   bool isLogged = false;
 
+  void logOut() async {
+    await FirebaseAuth.instance.signOut().then((responce) {
+      isLogged = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget homeBtn(context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 61.0),
+      padding: const EdgeInsets.only(top: 51.0),
       child: IconButton(
         icon: Icon(Icons.chevron_left),
         iconSize: 50.0,
@@ -57,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget header() {
     return Padding(
-      padding: const EdgeInsets.only(top: 70.0, left: 50.0),
+      padding: const EdgeInsets.only(top: 60.0, left: 50.0),
       child: Text(
         'Login',
         style: TextStyle(
@@ -70,131 +76,148 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget buttons(context) {
-    return Column(
-      children: <Widget>[
-        //Google button:
-        Padding(
-          padding: const EdgeInsets.only(top: 270.0, left: 63.0),
-          child: RawMaterialButton(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 115.0),
-              child: Text(
-                'Google',
-                style: TextStyle(
-                  fontFamily: 'Trebuchet MS',
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
-              ),
+    return Align(
+      alignment: FractionalOffset.bottomCenter,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          topSpacing(),
+          googlebtn(),
+          facebookBtn(),
+          twitterBtn(),
+        ],
+      ),
+    );
+  }
+
+  Widget topSpacing() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 25.0),
+    );
+  }
+
+  Widget facebookBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 12.0),
+      child: RawMaterialButton(
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 100.0),
+          child: Text(
+            'Facebook',
+            style: TextStyle(
+              fontFamily: 'Trebuchet MS',
+              fontSize: 20.0,
+              color: Colors.white,
             ),
-            fillColor: Color(0xFFDD4B39),
-            splashColor: Colors.redAccent,
-            shape: const StadiumBorder(),
-            onPressed: () {
-              googleAuth.signIn().then((result) {
-                result.authentication.then((googleKey) {
-                  AuthCredential credential = GoogleAuthProvider.getCredential(
-                      idToken: googleKey.idToken,
-                      accessToken: googleKey.accessToken);
-                  FirebaseAuth.instance
-                      .signInWithCredential(credential)
-                      .then((signedInUser) {
-                    isLogged = true;
-                    print('Signed in as ${signedInUser.displayName}');
-                    var route = MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          BrowsingScreen(value: signedInUser),
-                    );
-                    Navigator.of(context).pushReplacement(route);
-                  }).catchError((e) {
-                    print(e);
-                  });
+          ),
+        ),
+        fillColor: Color(0xFF3B5998),
+        splashColor: Colors.blueAccent,
+        shape: const StadiumBorder(),
+        onPressed: () {
+          fbLogin.logInWithReadPermissions(['email', 'public_profile']).then(
+              (result) {
+            switch (result.status) {
+              case FacebookLoginStatus.loggedIn:
+                AuthCredential credential = FacebookAuthProvider.getCredential(
+                    accessToken: result.accessToken.token);
+                FirebaseAuth.instance
+                    .signInWithCredential(credential)
+                    .then((signedInUser) {
+                  print('Signed in as ${signedInUser.displayName}');
+                  Navigator.pushReplacementNamed(context, '/browser');
                 }).catchError((e) {
                   print(e);
                 });
+                break;
+              case FacebookLoginStatus.cancelledByUser:
+                print('Facebook login cancelled by user');
+                break;
+              case FacebookLoginStatus.error:
+                print('Facebook login error');
+                break;
+            }
+          }).catchError((e) {
+            print(e);
+          });
+        },
+      ),
+    );
+  }
+
+  Widget twitterBtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 12.0),
+      child: RawMaterialButton(
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 110.0),
+          child: Text(
+            'Twitter',
+            style: TextStyle(
+              fontFamily: 'Trebuchet MS',
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        fillColor: Color(0xFF1DA1F2),
+        splashColor: Colors.lightBlue[100],
+        shape: const StadiumBorder(),
+        onPressed: () {
+          print('Twitter Clicked!');
+        },
+      ),
+    );
+  }
+
+  Widget googlebtn() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 12.0),
+      child: RawMaterialButton(
+        child: Padding(
+          padding:
+              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 115.0),
+          child: Text(
+            'Google',
+            style: TextStyle(
+              fontFamily: 'Trebuchet MS',
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        fillColor: Color(0xFFDD4B39),
+        splashColor: Colors.redAccent,
+        shape: const StadiumBorder(),
+        onPressed: () {
+          googleAuth.signIn().then((result) {
+            result.authentication.then((googleKey) {
+              AuthCredential credential = GoogleAuthProvider.getCredential(
+                  idToken: googleKey.idToken,
+                  accessToken: googleKey.accessToken);
+              FirebaseAuth.instance
+                  .signInWithCredential(credential)
+                  .then((signedInUser) {
+                isLogged = true;
+                print('Signed in as ${signedInUser.displayName}');
+                var route = MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      BrowsingScreen(value: signedInUser),
+                );
+                Navigator.of(context).pushReplacement(route);
               }).catchError((e) {
                 print(e);
               });
-            },
-          ),
-        ),
-        //--------------------------------------------------------------------------------------
-        //Facebook button:
-        Padding(
-          padding: const EdgeInsets.only(top: 30.0, left: 63.0),
-          child: RawMaterialButton(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 100.0),
-              child: Text(
-                'Facebook',
-                style: TextStyle(
-                  fontFamily: 'Trebuchet MS',
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            fillColor: Color(0xFF3B5998),
-            splashColor: Colors.blueAccent,
-            shape: const StadiumBorder(),
-            onPressed: () {
-              fbLogin.logInWithReadPermissions(
-                  ['email', 'public_profile']).then((result) {
-                switch (result.status) {
-                  case FacebookLoginStatus.loggedIn:
-                    AuthCredential credential =
-                        FacebookAuthProvider.getCredential(
-                            accessToken: result.accessToken.token);
-                    FirebaseAuth.instance
-                        .signInWithCredential(credential)
-                        .then((signedInUser) {
-                      print('Signed in as ${signedInUser.displayName}');
-                      Navigator.pushReplacementNamed(context, '/browser');
-                    }).catchError((e) {
-                      print(e);
-                    });
-                    break;
-                  case FacebookLoginStatus.cancelledByUser:
-                    print('Facebook login cancelled by user');
-                    break;
-                  case FacebookLoginStatus.error:
-                    print('Facebook login error');
-                    break;
-                }
-              }).catchError((e) {
-                print(e);
-              });
-            },
-          ),
-        ),
-        //-------------------------------------------------------------------------
-        // Twitter button:
-        Padding(
-          padding: const EdgeInsets.only(top: 30.0, left: 63.0),
-          child: RawMaterialButton(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 15.0, horizontal: 110.0),
-              child: Text(
-                'Twitter',
-                style: TextStyle(
-                  fontFamily: 'Trebuchet MS',
-                  fontSize: 20.0,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            fillColor: Color(0xFF1DA1F2),
-            splashColor: Colors.lightBlue[100],
-            shape: const StadiumBorder(),
-            onPressed: () {
-              print('Twitter Clicked!');
-            },
-          ),
-        ),
-      ],
+            }).catchError((e) {
+              print(e);
+            });
+          }).catchError((e) {
+            print(e);
+          });
+        },
+      ),
     );
   }
 }

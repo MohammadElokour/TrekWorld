@@ -5,10 +5,8 @@ import 'screens/login_screen.dart';
 import 'screens/browsing_screen.dart';
 import 'screens/Info_screen.dart';
 import 'screens/about_screen.dart';
-// import 'screens/signup_screen.dart';
 
 const PrimaryColor = const Color(0xFFDC143C);
-// const TextColor = const Color(0xFFFFFFFF);
 
 class App extends StatelessWidget {
   Widget build(BuildContext context) {

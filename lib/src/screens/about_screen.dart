@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../../services/crud.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class AboutScreen extends StatelessWidget {
         background(context),
         homeBtn(context),
         header(),
+        about()
       ],
     );
   }
@@ -21,9 +23,7 @@ class AboutScreen extends StatelessWidget {
         icon: Icon(Icons.chevron_left),
         iconSize: 50.0,
         onPressed: () {
-          if (crudObj.isLoggedIn()) {
-            Navigator.pushNamed(context, '/');
-          }
+          Navigator.pushReplacementNamed(context, '/');
         },
       ),
     );
@@ -45,7 +45,7 @@ class AboutScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 70.0, left: 50.0),
       child: Text(
-        'About:',
+        'About\n    Trek World',
         style: TextStyle(
           fontFamily: 'Trebuchet MS',
           fontSize: 40.0,
@@ -54,4 +54,26 @@ class AboutScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget about() {
+  return Center(
+    child: Container(
+      padding: EdgeInsets.all(15.0),
+      margin: EdgeInsets.only(top: 220.0),
+      child: Text(
+        'Trek World is and idea to encourage more and more people to explore the unexplored areas around the world, '
+        'to help promote others to hike and walk and take a break form the commotions in the city.\n '
+        'To run arround in the astonishing nature and gorgeous wildlife.\n\n '
+        'Trek World\n is about having unforgettable and uniqe experiences,'
+        'it\'s purpose is to make these wonderful places arround the world more popular and known between the individuals in the community',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: 'GT Walsheim Regular',
+          fontSize: 21.0,
+          color: Colors.white,
+        ),
+      ),
+    ),
+  );
 }

@@ -7,7 +7,16 @@ class HomeScreen extends StatelessWidget {
         background(context),
         header(),
         subHeader(),
-        login(context),
+        Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              about(context),
+              login(context),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -25,8 +34,8 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget login(context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 300.0, top: 645.0),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
       child: RawMaterialButton(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 21.0),
@@ -34,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             'Login',
             style: TextStyle(
               fontFamily: 'Trebuchet MS',
-              fontSize: 20.0,
+              fontSize: 21.0,
               color: Colors.white,
             ),
           ),
@@ -44,6 +53,31 @@ class HomeScreen extends StatelessWidget {
         shape: const StadiumBorder(),
         onPressed: () {
           Navigator.pushReplacementNamed(context, '/login');
+        },
+      ),
+    );
+  }
+
+  Widget about(context) {
+    return Container(
+      padding: EdgeInsets.all(15.0),
+      child: RawMaterialButton(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 9.0, horizontal: 21.0),
+          child: Text(
+            'About',
+            style: TextStyle(
+              fontFamily: 'Trebuchet MS',
+              fontSize: 20.0,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        fillColor: Colors.blue,
+        splashColor: Colors.lightBlue,
+        shape: const StadiumBorder(),
+        onPressed: () {
+          Navigator.pushNamed(context, '/about');
         },
       ),
     );
