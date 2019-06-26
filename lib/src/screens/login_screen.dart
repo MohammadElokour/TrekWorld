@@ -30,7 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
           homeBtn(context),
           header(),
           buttons(context),
-          // signIn(context),
         ],
       ),
     );
@@ -55,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
         icon: Icon(Icons.chevron_left),
         iconSize: 50.0,
         onPressed: () {
-          Navigator.pushReplacementNamed(context, '/');
+          Navigator.pop(context);
         },
       ),
     );

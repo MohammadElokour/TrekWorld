@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
         splashColor: Colors.orangeAccent,
         shape: const StadiumBorder(),
         onPressed: () {
-          Navigator.pushReplacementNamed(context, '/login');
+          Navigator.pushNamed(context, '/login');
         },
       ),
     );

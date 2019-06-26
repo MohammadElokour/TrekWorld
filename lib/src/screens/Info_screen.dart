@@ -1,18 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class InfoScreen extends StatelessWidget {
-  final DocumentSnapshot value;
+class InfoScreen extends StatefulWidget {
+  final DocumentSnapshot database;
   final FirebaseUser user;
-  InfoScreen({Key key, this.value, this.user}) : super(key: key);
+  InfoScreen({Key key, this.database, this.user}) : super(key: key);
 
-  @override
+  _InfoScreenState createState() => _InfoScreenState();
+}
+
+class _InfoScreenState extends State<InfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${value['name']}',
+          '${widget.database['name']}',
           style: TextStyle(
             fontFamily: 'Trebuchet MS',
             fontSize: 20.0,
@@ -43,7 +47,7 @@ class InfoScreen extends StatelessWidget {
                     color: Color(0xFFDC143C),
                     child: Wrap(
                       children: <Widget>[
-                        Image.network('${value['firstImage']}'),
+                        Image.network('${widget.database['firstImage']}'),
                       ],
                     ),
                   ),
@@ -54,7 +58,7 @@ class InfoScreen extends StatelessWidget {
                     color: Color(0xFFDC143C),
                     child: Wrap(
                       children: <Widget>[
-                        Image.network('${value['secondImage']}'),
+                        Image.network('${widget.database['secondImage']}'),
                       ],
                     ),
                   ),
@@ -65,7 +69,7 @@ class InfoScreen extends StatelessWidget {
                     color: Color(0xFFDC143C),
                     child: Wrap(
                       children: <Widget>[
-                        Image.network('${value['thirdImage']}'),
+                        Image.network('${widget.database['thirdImage']}'),
                       ],
                     ),
                   ),
@@ -80,7 +84,7 @@ class InfoScreen extends StatelessWidget {
                 Container(
                   child: Row(
                     children: <Widget>[
-                      Text(value['upVote'].toString()),
+                      Text(widget.database['upVote'].toString()),
                       IconButton(
                         icon: Icon(Icons.thumb_up),
                         iconSize: 30.0,
@@ -92,7 +96,7 @@ class InfoScreen extends StatelessWidget {
                 Container(
                     child: Row(
                   children: <Widget>[
-                    Text(value['downVote'].toString()),
+                    Text(widget.database['downVote'].toString()),
                     IconButton(
                       icon: Icon(Icons.thumb_down),
                       iconSize: 30.0,
@@ -121,7 +125,7 @@ class InfoScreen extends StatelessWidget {
                   borderRadius: BorderRadius.all(Radius.circular(7.0)),
                 ),
                 child: Text(
-                  '${value['info']}',
+                  '${widget.database['info']}',
                   style: TextStyle(
                     fontFamily: 'GT Walsheim Regular',
                     fontSize: 18.0,
@@ -130,161 +134,25 @@ class InfoScreen extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Comments',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontFamily: 'GT Walsheim Regular',
+                    fontSize: 22.0,
+                  ),
+                ),
+                TextField()
+              ],
+            ),
           )
         ],
       ),
     );
   }
 }
-
-// Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
-//   return ListTile(
-//     title: Stack(
-//       children: <Widget>[
-//         Container(
-//           padding: EdgeInsets.only(top: 290.0),
-//           child: Row(
-//             children: <Widget>[
-//               Container(padding: EdgeInsets.only(right: 110.0)),
-//               Container(
-//                 child: Text(document['upVote'].toString()),
-//               ),
-//               IconButton(
-//                 icon: Icon(Icons.thumb_up),
-//                 iconSize: 30.0,
-//                 splashColor: Colors.green,
-//                 onPressed: () {
-//                   bool isLiked = false;
-//                   List currentUser = ['${widget.value.email}'];
-//                   for (var i = 0; i < document['dislikeUsers'].length; i++) {
-//                     if (document['dislikeUsers'][i] ==
-//                         '${widget.value.email}') {
-//                       Firestore.instance.runTransaction((transaction) async {
-//                         DocumentSnapshot freshSnap =
-//                             await transaction.get(document.reference);
-//                         await transaction.update(freshSnap.reference, {
-//                           'dislikeUsers': FieldValue.arrayRemove(currentUser),
-//                           'downVote': freshSnap['downVote'] - 1,
-//                         });
-//                       });
-//                     }
-//                   }
-//                   for (var i = 0; i < document['likedUsers'].length; i++) {
-//                     if (document['likedUsers'][i] == '${widget.value.email}') {
-//                       isLiked = true;
-//                     }
-//                   }
-//                   for (var i = 0; i < document['likedUsers'].length; i++) {
-//                     if (isLiked) {
-//                       Firestore.instance.runTransaction((transaction) async {
-//                         DocumentSnapshot freshSnap =
-//                             await transaction.get(document.reference);
-//                         await transaction.update(freshSnap.reference, {
-//                           'likedUsers': FieldValue.arrayRemove(currentUser),
-//                           'upVote': freshSnap['upVote'] - 1
-//                         });
-//                       });
-//                     }
-//                   }
-//                   if (!isLiked) {
-//                     Firestore.instance.runTransaction((transaction) async {
-//                       DocumentSnapshot freshSnap =
-//                           await transaction.get(document.reference);
-//                       await transaction.update(freshSnap.reference, {
-//                         'likedUsers': FieldValue.arrayUnion(currentUser),
-//                         'upVote': freshSnap['upVote'] + 1
-//                       });
-//                     });
-//                   }
-//                 },
-//               ),
-//               Container(padding: EdgeInsets.only(right: 40.0)),
-//               Container(
-//                 child: Text(document['downVote'].toString()),
-//               ),
-//               IconButton(
-//                 icon: Icon(Icons.thumb_down),
-//                 iconSize: 30.0,
-//                 splashColor: Colors.red,
-//                 onPressed: () {
-//                   bool isDisliked = false;
-//                   List currentUser = ['${widget.value.email}'];
-
-//                   for (var i = 0; i < document['likedUsers'].length; i++) {
-//                     if (document['likedUsers'][i] == '${widget.value.email}') {
-//                       Firestore.instance.runTransaction((transaction) async {
-//                         DocumentSnapshot freshSnap =
-//                             await transaction.get(document.reference);
-//                         await transaction.update(freshSnap.reference, {
-//                           'likedUsers': FieldValue.arrayRemove(currentUser),
-//                           'upVote': freshSnap['upVote'] - 1,
-//                         });
-//                       });
-//                     }
-//                   }
-
-//                   for (var i = 0; i < document['dislikeUsers'].length; i++) {
-//                     if (document['dislikeUsers'][i] ==
-//                         '${widget.value.email}') {
-//                       isDisliked = true;
-//                     }
-//                   }
-//                   for (var i = 0; i < document['dislikeUsers'].length; i++) {
-//                     if (isDisliked) {
-//                       Firestore.instance.runTransaction((transaction) async {
-//                         DocumentSnapshot freshSnap =
-//                             await transaction.get(document.reference);
-//                         await transaction.update(freshSnap.reference, {
-//                           'dislikeUsers': FieldValue.arrayRemove(currentUser),
-//                           'downVote': freshSnap['downVote'] - 1
-//                         });
-//                       });
-//                     }
-//                   }
-//                   if (!isDisliked) {
-//                     Firestore.instance.runTransaction((transaction) async {
-//                       DocumentSnapshot freshSnap =
-//                           await transaction.get(document.reference);
-//                       await transaction.update(freshSnap.reference, {
-//                         'dislikeUsers': FieldValue.arrayUnion(currentUser),
-//                         'downVote': freshSnap['downVote'] + 1
-//                       });
-//                     });
-//                   }
-//                 },
-//               )
-//             ],
-//           ),
-//         ),
-//       ],
-//     ),
-//     onTap: () {},
-//   );
-// }
-
-// @override
-// Widget build(BuildContext context) {
-//   return Scaffold(
-//     appBar: AppBar(
-//       title: Text(
-//         'Explore',
-//         style: TextStyle(
-//           fontFamily: 'Trebuchet MS',
-//           fontSize: 20.0,
-//           color: Colors.white,
-//         ),
-//       ),
-//     ),
-//     body: StreamBuilder(
-//       stream: Firestore.instance.collection('Places').snapshots(),
-//       builder: (context, snapshot) {
-//         if (!snapshot.hasData) return CircularProgressIndicator();
-//         return ListView.builder(
-//           itemCount: snapshot.data.documents.length,
-//           itemBuilder: (context, index) =>
-//               _buildListItem(context, snapshot.data.documents[index]),
-//         );
-//       },
-//     ),
-//   );
-// }

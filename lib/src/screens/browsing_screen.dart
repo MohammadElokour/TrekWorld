@@ -381,7 +381,7 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
       onTap: () {
         var route = MaterialPageRoute(
           builder: (BuildContext context) => InfoScreen(
-                value: document,
+                database: document,
                 user: widget.value,
               ),
         );

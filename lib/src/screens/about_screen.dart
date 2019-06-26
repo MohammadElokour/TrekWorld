@@ -11,7 +11,7 @@ class AboutScreen extends StatelessWidget {
         background(context),
         homeBtn(context),
         header(),
-        about()
+        about(),
       ],
     );
   }
@@ -23,7 +23,7 @@ class AboutScreen extends StatelessWidget {
         icon: Icon(Icons.chevron_left),
         iconSize: 50.0,
         onPressed: () {
-          Navigator.pushReplacementNamed(context, '/');
+          Navigator.pop(context);
         },
       ),
     );
@@ -57,23 +57,29 @@ class AboutScreen extends StatelessWidget {
 }
 
 Widget about() {
-  return Center(
-    child: Container(
-      padding: EdgeInsets.all(15.0),
-      margin: EdgeInsets.only(top: 220.0),
-      child: Text(
-        'Trek World is and idea to encourage more and more people to explore the unexplored areas around the world, '
-        'to help promote others to hike and walk and take a break form the commotions in the city.\n '
-        'To run arround in the astonishing nature and gorgeous wildlife.\n\n '
-        'Trek World\n is about having unforgettable and uniqe experiences,'
-        'it\'s purpose is to make these wonderful places arround the world more popular and known between the individuals in the community',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontFamily: 'GT Walsheim Regular',
-          fontSize: 21.0,
-          color: Colors.white,
+  return Container(
+    padding: EdgeInsets.only(top: 235.0),
+    child: ListView(
+      children: <Widget>[
+        Center(
+          child: Container(
+            padding: EdgeInsets.all(15.0),
+            child: Text(
+              'Trek World\n is and idea to encourage more and more people to explore the unexplored areas around the world, '
+              'to help promote others to hike and walk and take a break from the commotions in the city. '
+              'To run arround in the astonishing nature and gorgeous wildlife.\n\n '
+              'Trek World\n is about having unforgettable and uniqe experiences,'
+              'it\'s purpose is to make these wonderful places arround the world more popular and known between the individuals in the community',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontFamily: 'GT Walsheim Regular',
+                fontSize: 21.0,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
-      ),
+      ],
     ),
   );
 }
