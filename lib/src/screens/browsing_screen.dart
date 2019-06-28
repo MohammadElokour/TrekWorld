@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,6 +16,7 @@ class BrowsingScreen extends StatefulWidget {
 }
 
 class _BrowsingScreenState extends State<BrowsingScreen> {
+  bool liked = false;
   String name;
   String firstImage;
   String secondImage;
@@ -154,7 +157,8 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
                       'upVote': 0,
                       'downVote': 0,
                       'likedUsers': [],
-                      'dislikeUsers': []
+                      'dislikeUsers': [],
+                      'commentsList': []
                     };
                     crudObj.addData(placeData).then((result) {
                       dialogTrigger(context);

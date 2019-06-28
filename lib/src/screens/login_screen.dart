@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget homeBtn(context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 51.0),
+      padding: EdgeInsets.only(top: 51.0),
       child: IconButton(
         icon: Icon(Icons.chevron_left),
         iconSize: 50.0,
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget header() {
     return Padding(
-      padding: const EdgeInsets.only(top: 60.0, left: 50.0),
+      padding: EdgeInsets.only(top: 60.0, left: 50.0),
       child: Text(
         'Login',
         style: TextStyle(
@@ -100,8 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(vertical: 12.0),
       child: RawMaterialButton(
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 100.0),
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 100.0),
           child: Text(
             'Facebook',
             style: TextStyle(
@@ -113,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         fillColor: Color(0xFF3B5998),
         splashColor: Colors.blueAccent,
-        shape: const StadiumBorder(),
+        shape: StadiumBorder(),
         onPressed: () {
           fbLogin.logInWithReadPermissions(['email', 'public_profile']).then(
               (result) {
@@ -150,8 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(vertical: 12.0),
       child: RawMaterialButton(
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 110.0),
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 110.0),
           child: Text(
             'Twitter',
             style: TextStyle(
@@ -163,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         fillColor: Color(0xFF1DA1F2),
         splashColor: Colors.lightBlue[100],
-        shape: const StadiumBorder(),
+        shape: StadiumBorder(),
         onPressed: () {
           print('Twitter Clicked!');
         },
@@ -176,8 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(vertical: 12.0),
       child: RawMaterialButton(
         child: Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 15.0, horizontal: 115.0),
+          padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 115.0),
           child: Text(
             'Google',
             style: TextStyle(
@@ -189,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         fillColor: Color(0xFFDD4B39),
         splashColor: Colors.redAccent,
-        shape: const StadiumBorder(),
+        shape: StadiumBorder(),
         onPressed: () {
           googleAuth.signIn().then((result) {
             result.authentication.then((googleKey) {

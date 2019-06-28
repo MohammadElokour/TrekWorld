@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:trekworld/src/screens/Comments_screen.dart';
 
 class InfoScreen extends StatefulWidget {
   final DocumentSnapshot database;
@@ -137,18 +138,32 @@ class _InfoScreenState extends State<InfoScreen> {
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: <Widget>[
-                Text(
+            margin: EdgeInsets.symmetric(horizontal: 107.0),
+            child: RawMaterialButton(
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
                   'Comments',
-                  textAlign: TextAlign.left,
                   style: TextStyle(
+                    fontWeight: FontWeight.w600,
                     fontFamily: 'GT Walsheim Regular',
-                    fontSize: 22.0,
+                    fontSize: 20.0,
                   ),
                 ),
-                TextField()
-              ],
+              ),
+              fillColor: Colors.white,
+              splashColor: Colors.grey,
+              shape: StadiumBorder(
+                  side: BorderSide(color: Color(0xFFDC143C), width: 2.0)),
+              onPressed: () {
+                var route = MaterialPageRoute(
+                  builder: (BuildContext context) => CommentScreen(
+                        database: widget.database,
+                        userObj: widget.user,
+                      ),
+                );
+                Navigator.of(context).push(route);
+              },
             ),
           )
         ],

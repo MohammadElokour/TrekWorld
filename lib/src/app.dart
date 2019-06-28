@@ -5,6 +5,7 @@ import 'screens/login_screen.dart';
 import 'screens/browsing_screen.dart';
 import 'screens/Info_screen.dart';
 import 'screens/about_screen.dart';
+import 'screens/Comments_screen.dart';
 
 const PrimaryColor = const Color(0xFFDC143C);
 
@@ -58,6 +59,12 @@ class App extends StatelessWidget {
           return Scaffold(
             body: AboutScreen(),
           );
+        },
+      );
+    } else if (settings.name == '/comments') {
+      return MaterialPageRoute(
+        builder: (context) {
+          return CommentScreen();
         },
       );
     }
