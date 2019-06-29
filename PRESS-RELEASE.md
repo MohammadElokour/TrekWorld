@@ -42,15 +42,16 @@ Once the project moves into development, the press release can be used as a touc
 
 ## Quote from You
 
-> "For the hiker out there, This app is for you! and for everyone else, what are you waiting for? go out there and start your first journey you will love it!
+> "For the hiker out there, This app is for you!
+> Everyone else, what are you waiting for? go out there and start your first journey, you will love it!
 
 ## How to Get Started
 
-> all you gotta do is install the application on your smartphone login via google and you are up and running!
+> Easy! all you gotta do is install the application on your smartphone login via google and you are good to go!
 
 ## Customer Quote
 
-> "this app is amazing I saw how beautifull Wadi Karak was from the photos and I spontaneously decided to go there for my next vacation, it was worth every second and every peny I'm greatfull for this app as it helped me see these really breathtaking views"
+> "this app is amazing I saw how beautifull Wadi Karak was from the photos and I spontaneously decided to go there for my next vacation, it was worth every second and every peny I'm greatfull for this app as it helped me see these really breathtaking destinations"
 
 ## Closing and Call to Action
 

@@ -6,10 +6,10 @@
 
 ## Screen Shots
 
-![home_screen](https://i.ibb.co/VCrXgC2/home-screen.png)
-![login_screen](https://i.ibb.co/QXQfDFX/login-screen.png)
-![browsing_screen](https://i.ibb.co/yP34xnk/browsing-screen.png)
-![info_screen](https://i.ibb.co/p4nVwkr/info-screnn.png)
+![home_screen](https://i.ibb.co/ZJ0HXW7/home-screen.png)
+![login_screen](https://i.ibb.co/WFQPptH/login-screen.png)
+![browsing_screen](https://i.ibb.co/pPxzGzQ/browsing-screen.png)
+![info_screen](https://i.ibb.co/1ZsgjQM/info-screnn.png)
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@
 
 ## Usage
 
-> Simply download the app, login with your google account and you are up and running!
+> As a user, simply download the app, login with your google account and you are up and running!. On the other hand as a developer download flutter, and download android studio make sure flutter plugin is installed and start editing within android studio or with your prefered editor.
 
 ## Requirements
 
@@ -39,7 +39,7 @@ This app was developed using:
 
 ### Installing Dependencies
 
-From within the root directory open the terminal/cmd and run _flutter doctor_ after installing flutter and make sure everything is checked!
+From within the root directory open the terminal/cmd and run **flutter doctor** after installing flutter and make sure everything is checked!
 all the dependencies are within the pupspec.yaml file which include the following:
 
 ```sh
