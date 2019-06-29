@@ -86,25 +86,26 @@ class _InfoScreenState extends State<InfoScreen> {
                   child: Row(
                     children: <Widget>[
                       Text(widget.database['upVote'].toString()),
-                      IconButton(
-                        icon: Icon(Icons.thumb_up),
-                        iconSize: 30.0,
-                        onPressed: () {},
+                      Container(padding: EdgeInsets.only(left: 7.0)),
+                      Icon(
+                        (Icons.thumb_up),
+                        size: 30.0,
                       ),
                     ],
                   ),
                 ),
                 Container(
-                    child: Row(
-                  children: <Widget>[
-                    Text(widget.database['downVote'].toString()),
-                    IconButton(
-                      icon: Icon(Icons.thumb_down),
-                      iconSize: 30.0,
-                      onPressed: () {},
-                    )
-                  ],
-                )),
+                  child: Row(
+                    children: <Widget>[
+                      Text(widget.database['downVote'].toString()),
+                      Container(padding: EdgeInsets.only(left: 7.0)),
+                      Icon(
+                        (Icons.thumb_down),
+                        size: 30.0,
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

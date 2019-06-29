@@ -12,7 +12,13 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  // List<String> comments = [];
+  List<String> comments = [];
+
+  void addNow(String val) {
+    setState(() {
+      comments.add('${widget.userObj.displayName}: $val');
+    });
+  }
 
   void addComment(String val) {
     List comment = ['${widget.userObj.displayName}: $val'];
@@ -26,11 +32,25 @@ class _CommentScreenState extends State<CommentScreen> {
   }
 
   Widget buildCommentsList() {
-    return ListView.builder(itemBuilder: (context, index) {
-      if (index < widget.database['commentsList'].length) {
-        return buildCommentItem(widget.database['commentsList'][index]);
-      }
-    });
+    return Column(
+      children: <Widget>[
+        Flexible(
+          flex: 7,
+          child: ListView.builder(itemBuilder: (context, index) {
+            if (index < widget.database['commentsList'].length) {
+              return buildCommentItem(widget.database['commentsList'][index]);
+            }
+          }),
+        ),
+        Flexible(
+          child: ListView.builder(itemBuilder: (context, index) {
+            if (index < comments.length) {
+              return buildCommentItem(comments[index]);
+            }
+          }),
+        ),
+      ],
+    );
   }
 
   Widget buildCommentItem(String comment) {
@@ -77,8 +97,8 @@ class _CommentScreenState extends State<CommentScreen> {
             margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
             child: TextField(
               onSubmitted: (String val) {
+                addNow(val);
                 addComment(val);
-                // Firestore.instance.document(widget.database.documentID).get();
               },
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(15.0),

@@ -35,7 +35,6 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
   Future<bool> addDialog(BuildContext context) async {
     return showDialog(
         context: context,
-        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
@@ -167,7 +166,7 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
                     });
                   }
                 },
-              )
+              ),
             ],
           );
         });
@@ -176,7 +175,6 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
   Future<bool> dialogTrigger(BuildContext context) async {
     return showDialog(
       context: context,
-      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
@@ -192,20 +190,6 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
               fontFamily: 'GT Walsheim Regular',
             ),
           ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                'Alright',
-                style: TextStyle(
-                  fontFamily: 'GT Walsheim Regular',
-                ),
-              ),
-              textColor: Colors.blue,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
         );
       },
     );
