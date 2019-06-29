@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,13 +15,11 @@ class BrowsingScreen extends StatefulWidget {
 }
 
 class _BrowsingScreenState extends State<BrowsingScreen> {
-  bool liked = false;
   String name;
   String firstImage;
   String secondImage;
   String thridImage;
   String info;
-
   CrudMethods crudObj = CrudMethods();
 
   void logOut() async {
@@ -390,6 +387,15 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
             color: Colors.white,
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              size: 30.0,
+            ),
+            onPressed: () {},
+          ),
+        ],
       ),
       drawer: Drawer(
         child: ListView(

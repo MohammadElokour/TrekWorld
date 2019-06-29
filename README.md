@@ -1,2 +1,0 @@
-# TrekWorld
-RBK Graduation Project.

@@ -1,0 +1,78 @@
+# Trek World
+
+> An app that shows you potential hiking spots to enjoy your time alone or with your loved ones. Explore
+> the vast world out there and calm your mind and body from the commotions in the city, see amazing sceners, walk through the woods
+> climb up mountains or go through valys. it's up to you to choose your destination we merly present the options!
+
+## Screen Shots
+
+![home_screen](https://i.ibb.co/VCrXgC2/home-screen.png)
+![login_screen](https://i.ibb.co/QXQfDFX/login-screen.png)
+![browsing_screen](https://i.ibb.co/yP34xnk/browsing-screen.png)
+![info_screen](https://i.ibb.co/p4nVwkr/info-screnn.png)
+
+## Table of Contents
+
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+   1. [Installing Dependencies](#installing-dependencies)
+   1. [Roadmap](#roadmap)
+
+## Usage
+
+> Simply download the app, login with your google account and you are up and running!
+
+## Requirements
+
+- flutter
+- Android Studio
+- firebase
+
+## Development
+
+This app was developed using:
+
+- Programing language: Darts.
+- Front-end framework: Flutter.
+- Back-end & Database: Firebase, Cloud Firestore.
+
+### Installing Dependencies
+
+From within the root directory open the terminal/cmd and run _flutter doctor_ after installing flutter and make sure everything is checked!
+all the dependencies are within the pupspec.yaml file which include the following:
+
+```sh
+dependencies:
+  flutter:
+    sdk: flutter
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^0.1.2
+  firebase_auth: ^0.11.1+6
+  flutter_facebook_login: ^2.0.1
+  firebase_database: ^3.0.2
+  cloud_firestore:
+  google_sign_in:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+```
+
+### Roadmap
+
+My vision for this app is to be a community based application a social media app for hiking! where people share their experiences with eachother to interact more and gather more to join the adventure, Its nice to see this activity be adopted by more people as it helps you go back to your roots to camp in the wildernes, to remember where we came from befor all the technology we got used to over the past years.
+
+Short-term plans include:
+
+- Improving the user experience with adding places.
+- Adding a search bar.
+- Plans to add chatrooms.
+
+Long-term plans:
+
+- Adding an events page where users can posts events for people to join and trek together!
+- Adding a blogging page so users will be able to make more comprehensive reviews about the places they have visited.
+- Include a profile page and users will be able to preview other profile pages.
+- Include an add friend feature so users can stay intouch and arrange new hikes with eachother.
