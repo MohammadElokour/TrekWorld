@@ -64,7 +64,7 @@ dev_dependencies:
 
 ### Roadmap
 
-My vision for this app for it to become a community based application, a social media app for hiking! where people share their experiences with eachother to interact more and gather more to join the adventure, Its nice to see this activity be adopted by more people as it helps you go back to your roots to camp in the wildernes, to remember where you came from befor all the technology we got used to over the past years.
+My vision for this app is for it to become a community based application, a social media app for hiking! where people share their experiences with eachother to interact more and gather more to join the adventure, Its nice to see this activity be adopted by more people as it helps you go back to your roots to camp in the wildernes, to remember where you came from befor all the technology we got used to over the past years.
 
 Short-term plans include:
 
