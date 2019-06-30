@@ -5,7 +5,7 @@ import 'screens/login_screen.dart';
 import 'screens/browsing_screen.dart';
 import 'screens/Info_screen.dart';
 import 'screens/about_screen.dart';
-import 'screens/Comments_screen.dart';
+import 'screens/comments_screen.dart';
 
 const PrimaryColor = const Color(0xFFDC143C);
 
