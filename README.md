@@ -1,8 +1,8 @@
 # Trek World
 
 > An app that shows you potential hiking spots to enjoy your time alone or with your loved ones. Explore
-> the vast world out there and calm your mind and body from the commotions in the city, see amazing sceners, walk through the woods
-> climb up mountains or go through valys. it's up to you to choose your destination we merly present the options!
+> the vast world out there and calm your mind and body from the commotions in the city, see amazing sceneries, walk through the woods
+> climb up mountains or go through valleys. it's up to you to choose your destination we merely present the options!
 
 ## Screen Shots
 
@@ -21,13 +21,14 @@
 
 ## Usage
 
-> As a user, simply download the app, login with your google account and you are up and running!. On the other hand as a developer download flutter, and download android studio make sure flutter plugin is installed and start editing within android studio or with your prefered editor.
+> As a user, simply download the app, login with your google account and you are up and running!.
+> As a developer download flutter and android studio, make sure flutter plugin is installed and start editing within android studio or with your prefered editor.
 
 ## Requirements
 
-- flutter
-- Android Studio
-- firebase
+- Installing Flutter
+- Installing Android Studio
+- Integration with Firebase
 
 ## Development
 
@@ -35,7 +36,7 @@ This app was developed using:
 
 - Programing language: Darts.
 - Front-end framework: Flutter.
-- Back-end & Database: Firebase, Cloud Firestore.
+- Back-end & Real-time Database: Firebase, Cloud Firestore.
 
 ### Installing Dependencies
 
@@ -58,22 +59,23 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.7.2+1
 ```
 
 ### Roadmap
 
-My vision for this app is to be a community based application a social media app for hiking! where people share their experiences with eachother to interact more and gather more to join the adventure, Its nice to see this activity be adopted by more people as it helps you go back to your roots to camp in the wildernes, to remember where we came from befor all the technology we got used to over the past years.
+My vision for this app for it to become a community based application, a social media app for hiking! where people share their experiences with eachother to interact more and gather more to join the adventure, Its nice to see this activity be adopted by more people as it helps you go back to your roots to camp in the wildernes, to remember where you came from befor all the technology we got used to over the past years.
 
 Short-term plans include:
 
 - Improving the user experience with adding places.
 - Adding a search bar.
-- Including a geo location link to google maps for each destination.
+- Including a geo location link to google maps for each place.
 - Plans to add chatrooms.
 
 Long-term plans:
 
-- Adding an events page where users can posts events for people to join and trek together!
+- Adding an events page where users can posts events for people to join and travel together!
 - Adding a blogging page so users will be able to make more comprehensive reviews about the places they have visited.
 - Include a profile page and users will be able to preview other profile pages.
 - Include an add friend feature so users can stay intouch and arrange new hikes with eachother.
