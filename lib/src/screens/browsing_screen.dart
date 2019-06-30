@@ -22,6 +22,80 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
   String info;
   CrudMethods crudObj = CrudMethods();
 
+  final TextEditingController filter = new TextEditingController();
+  String searchText = "";
+  List names = new List();
+  List filteredNames = new List();
+  Icon searchIcon = new Icon(
+    Icons.search,
+    size: 30.0,
+  );
+  Widget appBarTitle = new Text(
+    'Explore',
+    style: TextStyle(
+      fontFamily: 'Trebuchet MS',
+      fontSize: 20.0,
+      color: Colors.white,
+    ),
+  );
+
+  void _searchPressed() {
+    setState(() {
+      if (this.searchIcon.icon == Icons.search) {
+        this.searchIcon = new Icon(Icons.close);
+        this.appBarTitle = new TextField(
+          style: TextStyle(
+            fontFamily: 'GT Walsheim Regular',
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
+          controller: filter,
+          decoration: new InputDecoration(
+            contentPadding: EdgeInsets.all(3.0),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+              borderSide: BorderSide(color: Colors.white, width: 1.0),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50.0)),
+            ),
+            labelStyle: TextStyle(
+              fontFamily: 'GT Walsheim Regular',
+              fontSize: 18.0,
+              color: Colors.white,
+            ),
+            prefixIcon: new Icon(
+              Icons.search,
+              size: 30.0,
+              color: Colors.grey[200],
+            ),
+            hintText: 'Search...',
+            hintStyle: TextStyle(
+              fontFamily: 'GT Walsheim Regular',
+              fontSize: 18.0,
+              color: Colors.grey[200],
+            ),
+          ),
+        );
+      } else {
+        this.searchIcon = new Icon(
+          Icons.search,
+          size: 30.0,
+        );
+        this.appBarTitle = new Text(
+          'Explore',
+          style: TextStyle(
+            fontFamily: 'Trebuchet MS',
+            fontSize: 20.0,
+            color: Colors.white,
+          ),
+        );
+        filteredNames = names;
+        filter.clear();
+      }
+    });
+  }
+
   void logOut() async {
     await FirebaseAuth.instance.signOut().then((_) {
       Navigator.of(context)
@@ -379,21 +453,13 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Explore',
-          style: TextStyle(
-            fontFamily: 'Trebuchet MS',
-            fontSize: 20.0,
-            color: Colors.white,
-          ),
-        ),
+        title: appBarTitle,
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.search,
-              size: 30.0,
-            ),
-            onPressed: () {},
+            icon: searchIcon,
+            onPressed: () {
+              _searchPressed();
+            },
           ),
         ],
       ),

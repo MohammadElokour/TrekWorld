@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../../services/crud.dart';
 
 class AboutScreen extends StatelessWidget {
-  final CrudMethods crudObj = CrudMethods();
-
   Widget build(context) {
     return Stack(
       children: <Widget>[
@@ -33,7 +30,7 @@ class AboutScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Center(
       child: Image.asset(
-        'assets/images/signup.jpg',
+        'assets/images/about.jpg',
         width: size.width,
         height: size.height,
         fit: BoxFit.fill,

@@ -68,6 +68,7 @@ Short-term plans include:
 
 - Improving the user experience with adding places.
 - Adding a search bar.
+- Including a geo location link to google maps for each destination.
 - Plans to add chatrooms.
 
 Long-term plans:
