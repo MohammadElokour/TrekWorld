@@ -62,11 +62,11 @@ Widget about() {
           child: Container(
             padding: EdgeInsets.all(15.0),
             child: Text(
-              'Trek World\n is and idea to encourage more and more people to explore the unexplored areas around the world, '
-              'to help promote others to hike and walk and take a break from the commotions in the city. '
-              'To run arround in the astonishing nature and gorgeous wildlife.\n\n '
-              'Trek World\n is about having unforgettable and uniqe experiences,'
-              'it\'s purpose is to make these wonderful places arround the world more popular and known between the individuals in the community',
+              'Trek World\n is an idea to encourage more and more people to explore the unexplored areas around the world, '
+              'to help promote others to hike and walk and take a break from the commotions in the city.'
+              'To run around in the astonishing nature and gorgeous wildlife.\n\n '
+              'Trek World\n is about having unforgettable and unique experiences,'
+              'its purpose is to make these wonderful places around the world more popular and known between people in the community',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontFamily: 'GT Walsheim Regular',
