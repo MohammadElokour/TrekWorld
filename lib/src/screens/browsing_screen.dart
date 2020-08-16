@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -46,34 +47,31 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
         this.appBarTitle = new TextField(
           style: TextStyle(
             fontFamily: 'GT Walsheim Regular',
-            fontSize: 20.0,
-            color: Colors.white,
+            fontSize: 18.0,
+            color: Colors.black,
           ),
           controller: filter,
           decoration: new InputDecoration(
             contentPadding: EdgeInsets.all(3.0),
-            enabledBorder: OutlineInputBorder(
+            filled: true,
+            fillColor: Colors.white,
+            focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(50.0)),
               borderSide: BorderSide(color: Colors.white, width: 1.0),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(50.0)),
             ),
-            labelStyle: TextStyle(
-              fontFamily: 'GT Walsheim Regular',
-              fontSize: 18.0,
-              color: Colors.white,
-            ),
             prefixIcon: new Icon(
               Icons.search,
               size: 30.0,
-              color: Colors.grey[200],
+              color: Colors.black,
             ),
             hintText: 'Search...',
             hintStyle: TextStyle(
               fontFamily: 'GT Walsheim Regular',
               fontSize: 18.0,
-              color: Colors.grey[200],
+              color: Colors.grey[700],
             ),
           ),
         );
@@ -440,9 +438,9 @@ class _BrowsingScreenState extends State<BrowsingScreen> {
       onTap: () {
         var route = MaterialPageRoute(
           builder: (BuildContext context) => InfoScreen(
-                database: document,
-                user: widget.value,
-              ),
+            database: document,
+            user: widget.value,
+          ),
         );
         Navigator.of(context).push(route);
       },
